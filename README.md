@@ -1,6 +1,10 @@
 # ghpi
 GHPi connects temperature sensors to a Raspberry Pi for monitoring and logging.
 
+# preparation
+https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
+
+
 # installation
 sudo apt-get update
 
