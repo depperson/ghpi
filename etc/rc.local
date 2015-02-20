@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-/home/pi/ghpi/tempmon.py >/dev/null 2>&1 &
-/home/pi/ghpi/remotemon.py >/dev/null 2>&1 &
+/opt/ghpi/scripts/sensors.py >/dev/null 2>&1 &
+#/home/pi/ghpi/remotemon.py >/dev/null 2>&1 &
 
 exit 0
