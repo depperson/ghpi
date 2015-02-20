@@ -1,0 +1,48 @@
+body {
+}
+
+.tempbox a:link, .tempbox a:visited, 
+.tempboxbad a:link, .tempboxbad a:visited
+{
+    color: white; padding: 10px;
+}
+
+.midstatusbox, .midstatusboxbad {
+position:absolute; top: 1250px; left: 10px; padding: 10px;
+background-color: green; color: white; 
+font-weight: bold; font-size: 50px;
+}
+
+.midstatusboxbad {
+background-color: red; 
+}
+
+.statusbox, .statusboxbad {
+position:absolute; top: 30px; left: 200px; padding: 10px;
+background-color: green; color: white; 
+font-weight: bold; font-size: 60px;
+}
+
+.statusboxbad {
+background-color: red; 
+}
+
+.tempbox, .tempboxbad, .tempboxoff {
+position:absolute; padding: 4px;
+background-color: green; color: white; 
+font-weight:bold; font-size: 25px;
+}
+
+.tempboxbad {
+background-color: red; 
+}
+
+.tempboxoff {
+background-color: #CCC;
+}
+
+.linkbox {
+padding: 6px;
+background-color: #333; color: white; 
+font-weight:bold;
+}
