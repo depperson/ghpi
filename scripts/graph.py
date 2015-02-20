@@ -42,7 +42,7 @@ def graph(time, rrdfile):
 	if os.path.isfile(rrdfile):
 		print "generating %s graph for %s" % (time, rrdfile)
 		rrdfile = os.path.basename(rrdfile)
-		outfile = outpath + rrdfile + "-hourly.png"
+		outfile = outpath + time + '-' + rrdfile + ".png"
 		rrdtool.graph(outfile, 	'-a', 'PNG',
 				'-w', '350', '-h', '120',
 				'-u 100', '-l', '30',
