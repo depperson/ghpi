@@ -22,7 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-# d33z.com
+
+# This script generates PNGs from RRD files for a given time range. The expected
+# use case is by a cron job. Usage should be fairly straightforward.
 
 
 outpath = "/opt/ghpi/www/graphs/"
