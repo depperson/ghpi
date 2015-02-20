@@ -1,0 +1,9 @@
+
+# ghpi - reduce gpu memory to minimum
+gpu_mem=16
+
+# ghpi - enable dynamic cpu speed
+arm_freq_min=100
+arm_freq=800
+
+kernel=kernel-d33z.img
