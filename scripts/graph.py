@@ -31,7 +31,7 @@ outpath = "/opt/ghpi/www/graphs/"
 rrdpath = "/opt/ghpi/rrd/"
 
 
-import rrdtool, glob, os, sys
+import rrdtool, glob, os, sys, datetime
 
 
 def graph(time, rrdfile):
@@ -44,24 +44,24 @@ def graph(time, rrdfile):
 		rrdfile = os.path.basename(rrdfile)
 		outfile = outpath + time + '-' + rrdfile + ".png"
 		rrdtool.graph(outfile, 	'-a', 'PNG',
-				'-w', '350', '-h', '120',
-				'-u 100', '-l', '30',
+				'-w', '370', '-h', '130',
+				'-u 110', '-l', '40',
 				'--start', '-%s' % time, '--end', 'now',
 				'--slope-mode',
 				'--font', 'DEFAULT:7:',
-				'--title', '"last 6h from %s" rrdfile',
-				'--watermark', '"Generated on "',
-				'--vertical-label', '"temperature"',
-				'--right-axis', '1:0',
+				'--title', "last %s from %s" % (time, rrdfile),
+				'--watermark', 'Generated on %s' % datetime.datetime.now(),
+				#'--vertical-label', 'temp',
+				#'--right-axis', '1:0',
 				#'--x-grid', 'MINUTE:10:HOUR:1:MINUTE:120:0:%I%p',
 				'--alt-y-grid', '--rigid',
 				'DEF:tempa=' + rrdpath + rrdfile +':t:AVERAGE',
-				'AREA:tempa#CCCCCC:"average"',
+				'AREA:tempa#CCCCCC:avg',
 				'DEF:temp=' + rrdpath + rrdfile +':t:MAX',
-				'LINE2:temp#0000FF:"maximum"',
-				'GPRINT:temp:LAST:"Cur\: %5.2lf"',
-				'GPRINT:temp:MAX:"Max\: %5.2lf"',
-				'GPRINT:temp:MIN:"Min\: %5.2lf\t\t\t"' )
+				'LINE2:temp#0000FF:max',
+				'GPRINT:temp:LAST:Cur\: %5.2lf\g',
+				'GPRINT:temp:MAX:Max\: %5.2lf\g',
+				'GPRINT:temp:MIN:Min\: %5.2lf\t' )
 
 
 if len(sys.argv) == 1:
