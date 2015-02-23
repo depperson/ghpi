@@ -1,18 +1,27 @@
-# every 5 minutes
-#*/5 * * * * /opt/ghpi/storesystem.sh >/dev/null 2>&1 
+# GHPi by Daniel Epperson under MIT license
+# see github.com/depperson/ghpi
 
 # every 20 minutes
 */20 * * * * 	root	/opt/ghpi/scripts/graph.py 6h >/dev/null 2>&1 
 
-# every hour at 15 after
+# hourly
 13 * * * * 	root	/opt/ghpi/scripts/graph.py 1d >/dev/null 2>&1 
 
 # every six hours
-15 */6 * * * 	root	/opt/ghpi/scripts/graph.py 7d >/dev/null 2>&1 
+15 */6 * * * 	root	/opt/ghpi/scripts/graph.py 2d >/dev/null 2>&1 
 
 # daily
-17 1 * * * 	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
+17 1 * * * 	root	/opt/ghpi/scripts/graph.py 7d >/dev/null 2>&1
 
-# weekly 1m
-# monthly 3m, 1y
+# every 2 days
+21 1 * * */2	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
+
+# weekly
+24 1 * * 0	root	/opt/ghpi/scripts/graph.py 1m >/dev/null 2>&1
+
+# every 2 weeks
+27 1 */2 * * 	root	/opt/ghpi/scripts/graph.py 3m >/dev/null 2>&1
+
+# monthly 
+31 1 1 * * 	root	/opt/ghpi/scripts/graph.py 1y >/dev/null 2>&1
 
