@@ -62,8 +62,10 @@ then
 fi
 echo "done."
 
+
 chown www-data:www-data /opt/ghpi/www
 
 touch /opt/ghpi/www/graphs/custom.png
 chown www-data:www-data /opt/ghpi/www/graphs/custom.png
+ln -sf ghpi /etc/cron.d/ghpi
 
