@@ -41,13 +41,14 @@ if [ "$(lsmod|grep -c i2c)" -lt 2 ];
 then
 	echo "fail."
 	echo "The i2c OLED display will not work. Proceeding anyway."
+else
+	echo "okay."
 fi
-echo "done."
 
 echo -n "Checking /var/www symlink..."
 if [ "$(ls -la /var | grep -c ghpi)" -ne 1 ];
 then
-	echo "fail. Creating symlink to /opt/ghpi/www. "
+	echo -n "missing. Creating symlink to /opt/ghpi/www. "
 	rm -rf /var/www
 	ln -sf /opt/ghpi/www/ /var/www
 fi
@@ -56,9 +57,17 @@ echo "done."
 echo -n "Checking /etc/rc.local symlink..."
 if [ "$(ls -la /etc | grep -c ghpi)" -ne 1 ];
 then
-	echo "fail. Creating symlink to /opt/ghpi/etc/rc.local. "
+	echo -n "missing. Creating symlink to /opt/ghpi/etc/rc.local. "
 	rm -rf /etc/rc.local
 	ln -sf /opt/ghpi/etc/rc.local /etc/rc.local
+fi
+echo "done."
+
+echo -n "Checking /etc/cron.d/ghpi symlink..."
+if [ "$(ls -la /etc/cron.d | grep -c ghpi)" -ne 1 ];
+then
+        echo -n "missing. Creating symlink to /opt/ghpi/etc/cron.d/ghpi. "
+	ln -sf /opt/ghpi/etc/cron.d/ghpi /etc/cron.d/ghpi
 fi
 echo "done."
 
@@ -67,5 +76,5 @@ chown www-data:www-data /opt/ghpi/www
 
 touch /opt/ghpi/www/graphs/custom.png
 chown www-data:www-data /opt/ghpi/www/graphs/custom.png
-ln -sf ghpi /etc/cron.d/ghpi
+
 
