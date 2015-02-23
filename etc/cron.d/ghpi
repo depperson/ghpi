@@ -1,17 +1,17 @@
 # every 5 minutes
-*/5 * * * * /opt/ghpi/storesystem.sh >/dev/null 2>&1 
+#*/5 * * * * /opt/ghpi/storesystem.sh >/dev/null 2>&1 
 
 # every 20 minutes
-*/20 * * * * /opt/ghpi/script/graph.py 6h >/dev/null 2>&1 
+*/20 * * * * 	root	/opt/ghpi/scripts/graph.py 6h >/dev/null 2>&1 
 
 # every hour at 15 after
-13 * * * * /opt/ghpi/script/graph.py 1d >/dev/null 2>&1 
+13 * * * * 	root	/opt/ghpi/scripts/graph.py 1d >/dev/null 2>&1 
 
 # every six hours
-15 */6 * * * /opt/ghpi/script/graph.py 7d >/dev/null 2>&1 
+15 */6 * * * 	root	/opt/ghpi/scripts/graph.py 7d >/dev/null 2>&1 
 
 # daily
-17 1 * * * /opt/ghpi/script/graph.py 14d >/dev/null 2>&1
+17 1 * * * 	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
 
 # weekly 1m
 # monthly 3m, 1y
