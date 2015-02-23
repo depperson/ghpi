@@ -77,4 +77,6 @@ chown www-data:www-data /opt/ghpi/www
 touch /opt/ghpi/www/graphs/custom.png
 chown www-data:www-data /opt/ghpi/www/graphs/custom.png
 
+apt-get install php5-sqlite i2c-tools python-smbus python-pip python-dev
+pip install pillow
 

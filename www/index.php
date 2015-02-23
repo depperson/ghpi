@@ -3,7 +3,20 @@
 <head>
 	<meta name="author" content="depperson@gmail.com">
 	<meta name="viewport" content="initial-scale=0.5">
-	<meta http-equiv="refresh" content="600">
+<?php
+if ($db = new PDO('sqlite:ghpi.db')) {
+	$result = $db->query("SELECT * from settings;");
+	if (!$result) {
+		echo '	<meta http-equiv="refresh" content="4; url=settings.php">';
+	} else {
+		echo '	<meta http-equiv="refresh" content="600">';
+	}
+} else {
+	// db failure
+	echo '</head>db error</html>';
+}
+?>
+
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>ghTemp</title>
 </head>
