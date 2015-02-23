@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 from PIL import Image, ImageFont, ImageDraw
-import smbus
+import smbus, random
 
 class canvas(object):
     """
@@ -252,7 +252,7 @@ temp = info['ds[t].last_ds']
 device = sh1106(port=1, address=0x3C)  
 with canvas(device) as draw:
     bigfont = ImageFont.truetype('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 40)
-    smfont = ImageFont.truetype('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 16)
-    draw.text((0, 0), "desk 1234", font=smfont, fill=255)
-    draw.text((0,16), temp, font=bigfont, fill=255)
+    #smfont = ImageFont.truetype('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 16)
+    #draw.text((0, 0), "desk 1234", font=smfont, fill=255)
+    draw.text((random.randint(0,16),16), temp, font=bigfont, fill=255)
 
