@@ -7,6 +7,13 @@
 if ($db = new PDO('sqlite:ghpi.db')) {
 	$result = $db->query("SELECT * from settings;");
 	if (!$result) {
+		// there are no settings returned, db is empty
+
+		// create tables
+		$db->exec("CREATE TABLE settings (id INTEGER PRIMARY KEY, name TEXT, value TEXT);");
+		$db->exec("INSERT INTO  settings (name, value) VALUES ('zip', '78704');");
+
+		// send user to the settings page
 		echo '	<meta http-equiv="refresh" content="4; url=settings.php">';
 	} else {
 		echo '	<meta http-equiv="refresh" content="600">';

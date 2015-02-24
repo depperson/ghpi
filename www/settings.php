@@ -1,4 +1,13 @@
-<!DOCTYPE html>
+<?php
+
+// open the db
+if (!($db = new PDO('sqlite:ghpi.db'))) 
+{
+  echo '<b>db open failed.</b>';
+}
+
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
  <!-- bootstrap //-->
@@ -44,7 +53,49 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Setings</h1>
-
+	  <?php	
+		// update the zipcode
+		if (isset($_POST["zip"])) 
+		{
+  		  $zip = (int) $_POST["zip"];
+  		  $sql = "UPDATE settings SET value=? WHERE name='zip'";
+  		  $res = $db->prepare($sql); 
+  		  $res->execute(array($zip));  
+		  $err = $db->errorInfo();
+		  if ($err[0] != '00000')
+		  {
+			echo '		<div class="alert alert-danger" role="alert">
+		  <b>Error!</b>  The db update failed. 
+		</div>';
+		  } else {
+			echo '		<div class="alert alert-success" role="alert">
+		  <b>Success!</b>  The new zipcode '. $zip .' was saved.
+		</div>';
+		  }
+		} // end zipcode post if
+		
+		// edit sensor
+		if (isset($_GET["sensor"]))
+		{
+		  $sensor = $_GET["sensor"];
+		  echo '
+          <h2 class="sub-header">Sensor '. $sensor .'</h2><a name="sensors"></a>
+	  <form class="form-inline" action="'. $_SERVER['PHP_SELF'] .'" method="post">
+	    <div class="form-group">
+		<label for="nameid">Description</label>
+		<input type="text" class="form-control" id="nameid"
+			placeholder="Kitchen"';
+		  $res = $db->prepare("SELECT value FROM settings WHERE name='$sensor' LIMIT 1;");
+                  $res->execute();
+                  $row = $res->fetch();
+                  if ($row) echo "value='". $row[0] ."'";
+		  echo '>
+	    </div>
+	    <button type="submit" class="btn btn-default">Update</button>
+ 	  </form>
+';
+		} else {
+		  echo '
           <h2 class="sub-header">Sensors</h2><a name="sensors"></a>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -57,7 +108,7 @@
                 </tr>
               </thead>
               <tbody>
-		<?php
+';
 		$files = glob("/opt/ghpi/rrd/*");
 		foreach ($files as $file) {
 			echo "                <tr>";
@@ -69,16 +120,25 @@
 			echo "                  <td>The quick brown fox jumps over the lazy dog.</td>";
 			echo "                </tr>";
 		}
-		?>
+		echo '
               </tbody>
             </table>
-          </div>
+          </div>';
+		} ?>
 
 	  <h2 class="sub-header">Weather</h2><a name="weather"></a>
-	  <form class="form-inline">
+	  <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
   	    <div class="form-group">
-    	      <label for="exampleInputName2">Zipcode</label>
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="78747">
+    	      <label for="zipid">Zipcode</label>
+              <input type="text" class="form-control" id="zipid" 
+			placeholder="78747" name="zip" <?php
+		$res = $db->prepare("SELECT value FROM settings WHERE name='zip' LIMIT 1;");
+		$res->execute();
+		$row = $res->fetch();
+		if ($row) {
+		  echo "value='". $row[0] ."'"; 
+		}
+	      ?> >
             </div>
   	    <button type="submit" class="btn btn-default">Update</button>
  	  </form>
