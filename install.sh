@@ -31,7 +31,7 @@ echo -n "Checking install path..."
 if [ "$(pwd)" != "/opt/ghpi" ];
 then
 	echo "fail."
-	echo "Please move this folder to /opt/ghpi"
+	echo "Please move this folder to /opt/ghpi and run install.sh from there as root."
 	exit 1
 fi
 echo "done."
@@ -55,11 +55,20 @@ fi
 echo "done."
 
 echo -n "Checking /etc/rc.local symlink..."
-if [ "$(ls -la /etc | grep -c ghpi)" -ne 1 ];
+if [ "$(ls -la /etc/rc.local | grep -c ghpi)" -ne 1 ];
 then
 	echo -n "missing. Creating symlink to /opt/ghpi/etc/rc.local. "
 	rm -rf /etc/rc.local
 	ln -sf /opt/ghpi/etc/rc.local /etc/rc.local
+fi
+echo "done."
+
+echo -n "Checking /etc/sysctl.conf symlink..."
+if [ "$(ls -la /etc/sysctl.conf | grep -c ghpi)" -ne 1 ];
+then
+	echo -n "missing. Creating symlink to /opt/ghpi/etc/sysctl.conf. "
+	rm -rf /etc/sysctl.conf
+	ln -sf /opt/ghpi/etc/sysctl.conf /etc/sysctl.conf
 fi
 echo "done."
 
