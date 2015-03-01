@@ -51,32 +51,21 @@
 	        <div class="alert alert-{$noticelevel} role="alert">
 	            {$noticetext} 
         	</div>{/if}
-
-                <p><a href="sensor.php?mode=scan">Scan</a> for wired sensors or  
-                <a href="sensor.php?mode=add">add</a> a wireless sensor manually.</p>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Actions</th>
-                                <th>Reading</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-{foreach $sensors sensor}
-	                    <tr>
-			        <td>{$sensor}</td>
-			        <td><a href='#'>edit</a></td>
-			        <td>100.10</td>
-			        <td>The quick brown fox jumps over the lazy dog.</td>
-			    </tr>
-{/foreach}
-                        </tbody>
-                    </table>
-                </div>
-
+                <form class="form-inline" action="sensor.php" method="post">
+                    <div class="form-group">
+                        <a href="sensor.php?mode=scan" class="btn btn-primary">Scan</a>
+                        <label for="sensorid">or add a sensor</label>
+                        <input type="text" class="form-control" id="sensorid"
+                            placeholder="28-abcdef" name="sensor">
+                        <label for="nameid">with description</label>
+                        <input type="text" class="form-control" id="nameid"
+                            placeholder="Living room" name="desc">
+                        <input type="hidden" name="add" value="yes">
+                    </div>
+                    <button type="submit" class="btn btn-default">Add</button>
+                </form>
+                <p> &nbsp; </p>
+                {include file="sensorlist.tpl"}
             </div>
         </div>
     </div>

@@ -52,54 +52,10 @@
 	            {$noticetext} 
         	</div>{/if}
                 <h2 class="sub-header">Sensors</h2><a name="sensors"></a>
-                {if $mode == "edit"}
-                <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form class="form-inline" action="sensor.php" method="post">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Sensor</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{$sensore.name}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control"
-                                name="desc" value="{$sensore.value}">
-                        </div>
-                        <input type="hidden" name="edit" value="yes">
-                        <input type="hidden" name="sensor" value="{$sensore.name}">
-                    </div>
-                    <div class="form-group">
-                            <button type="submit" class="btn btn-primary col-sm-2">Save</button>
-                    </div>
-                </form>
-                {else}
-                <p><a href="?mode=scan">Scan</a> for wired sensors.</p>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Actions</th>
-                                <th>Reading</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-{foreach $sensors sensor}
-	                    <tr>
-			        <td>{$sensor.name}</td>
-			        <td><a href='?mode=edit&sensor={$sensor.name}'>edit</a></td>
-			        <td>100.10</td>
-			        <td>{$sensor.value}</td>
-			    </tr>
-{/foreach}
-                        </tbody>
-                    </table>
-                </div>
-                <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
-                        <label for="sensorid">Add a sensor</label>
+                        <a href="sensor.php?mode=scan" class="btn btn-primary">Scan</a> 
+                        <label for="sensorid">or add a sensor</label>
                         <input type="text" class="form-control" id="sensorid"
                             placeholder="28-abcdef" name="sensor">
                         <label for="nameid">with description</label>
@@ -109,6 +65,8 @@
                     </div>
                     <button type="submit" class="btn btn-default">Add</button>
                 </form>
+                <p> &nbsp; </p>
+                {include file="sensorlist.tpl"}
                 <p> &nbsp; </p>
 	        <h2 class="sub-header">Weather</h2><a name="weather"></a>
                 <div class="row">
@@ -125,7 +83,6 @@
                 <div class="col-md-6">
                     <p><a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:78655.1.99999&bannertypeclick=wu_clean2day" title="Weather Forecast" target="_blank"><img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_clean2day_cond&zip={$zip}&language=EN" alt="Find more about Weather Underground" width="300" /></a></p>
                 </div>
-                {/if}
             </div>
 
 

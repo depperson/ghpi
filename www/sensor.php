@@ -17,7 +17,68 @@ if (!($db = new PDO('sqlite:ghpi.db')))
 }
 
 
-// scan mode
+// add a sensor
+if (isset($_POST["add"]))
+{
+    if (isset($_POST["sensor"]) && isset($_POST["desc"]))
+    {
+
+        $res = $db->prepare("INSERT INTO settings (name, value)
+                VALUES ('". $_POST["sensor"] ."', '". $_POST["desc"] ."');");
+        $res->execute();
+        $err = $db->errorInfo();
+        if ($err[0] != '00000')
+        {
+            $data['noticetext'] = '<b>Error!</b>  The db update failed for '. $_POST["sensor"] .'.';
+            $data['noticelevel']= 'danger';
+            $dwoo->output($tepl, $data);
+            die('Error writing sensor to db.');
+        } else {
+            $notice_text = '<b>Success!</b>  Sensor '. $_POST["sensor"] .' was added.';
+            $notice_level = 'success';
+        }
+    }
+} // end sensor add if
+
+
+// edit a sensor
+if (isset($_GET['mode']) && ($_GET["mode"] == "edit"))
+{
+    $mode = "edit";
+    if (isset($_GET['sensor']))
+    {
+        $res = $db->prepare("SELECT name,value FROM settings WHERE name='". $_GET['sensor'] ."';");
+        $res->execute();
+        $sensore = $res->fetch(PDO::FETCH_ASSOC);
+    }
+} // end sensor edit if
+
+
+// save sensor edit
+if (isset($_POST["edit"]))
+{
+    if (isset($_POST["sensor"]) && isset($_POST["desc"]))
+    {
+        $res = $db->prepare("   UPDATE settings
+                                SET value='". $_POST['desc'] ."'
+                                WHERE name='".$_POST['sensor'] ."';");
+        $res->execute();
+        $err = $db->errorInfo();
+        if ($err[0] != '00000')
+        {
+            $data['noticetext'] = '<b>Error!</b>  The db update failed for '. $_POST["sensor"] .'.';
+            $data['noticelevel']= 'danger';
+            $dwoo->output($tepl, $data);
+            die('Error writing sensor to db.');
+        } else {
+            $notice_text = '<b>Success!</b>  Sensor '. $_POST["sensor"] .' was saved.';
+            $notice_level = 'success';
+        }
+    }
+}
+
+
+// scan for wired sensors
 if ($_GET['mode'] == "scan")
 {
     // find all wired 1-wire sensors
@@ -59,9 +120,9 @@ if ($_GET['mode'] == "scan")
 
 
 // list the sensors from db
-$res = $db->prepare("SELECT value FROM settings WHERE name LIKE '28%';");
+$res = $db->prepare("SELECT name,value FROM settings WHERE name LIKE '28%';");
 $res->execute();
-$sensors = $res->fetch(PDO::FETCH_ASSOC);
+$sensors = $res->fetchAll(PDO::FETCH_ASSOC);
 //print_r($rows);
 
 
