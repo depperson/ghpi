@@ -10,11 +10,11 @@
 # every six hours
 15 */6 * * * 	root	/opt/ghpi/scripts/graph.py 2d >/dev/null 2>&1 
 
-# daily
-17 1 * * * 	root	/opt/ghpi/scripts/graph.py 7d >/dev/null 2>&1
+# every 12 hours
+17 */12 * * * 	root	/opt/ghpi/scripts/graph.py 7d >/dev/null 2>&1
 
-# every 2 days
-21 1 * * */2	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
+# daily
+21 1 * * *	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
 
 # weekly
 24 1 * * 0	root	/opt/ghpi/scripts/graph.py 1m >/dev/null 2>&1
