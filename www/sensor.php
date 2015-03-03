@@ -41,6 +41,19 @@ if (isset($_POST["add"]))
 } // end sensor add if
 
 
+// view a sensor
+if (isset($_GET['mode']) && ($_GET["mode"] == "view"))
+{
+    $mode = "view";
+    if (isset($_GET['sensor']))
+    {
+        $res = $db->prepare("SELECT name,value FROM settings WHERE name='". $_GET['sensor'] ."';");
+        $res->execute();
+        $sensor = $res->fetch(PDO::FETCH_ASSOC);
+    }
+} // end sensor edit if
+
+
 // edit a sensor
 if (isset($_GET['mode']) && ($_GET["mode"] == "edit"))
 {
@@ -49,7 +62,7 @@ if (isset($_GET['mode']) && ($_GET["mode"] == "edit"))
     {
         $res = $db->prepare("SELECT name,value FROM settings WHERE name='". $_GET['sensor'] ."';");
         $res->execute();
-        $sensore = $res->fetch(PDO::FETCH_ASSOC);
+        $sensor = $res->fetch(PDO::FETCH_ASSOC);
     }
 } // end sensor edit if
 
@@ -131,6 +144,7 @@ $data['mode']       = $_GET['mode'];
 $data['zip']        = $zip;
 $data['noticetext'] = $notice_text;
 $data['noticelevel']= $notice_level;
+$data['sensor']    = $sensor;
 $data['sensors']    = $sensors;
 $dwoo->output($tepl, $data);
 

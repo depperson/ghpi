@@ -2,7 +2,7 @@
     <title>GHPi Settings</title>
 {include file="topbar.tpl"}
     <div class="container-fluid">
-        <div class="col-sm-9 col-md-12 main">
+        <div class="col-sm-6 col-md-12 main">
             <h1 class="page-header">Settings</h1>
                 {if $noticetext}
 	        <div class="alert alert-{$noticelevel} role="alert">
