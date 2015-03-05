@@ -22,7 +22,11 @@ if sys.argv[1] == "init":
     conn.execute('''CREATE TABLE IF NOT EXISTS sensors (
                         address char(50) primary key not null, 
                         name, last, mapx, mapy)''')
-    conn.execute('''CREATE TABLE IF NOT EXISTS settings (name, value)''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS settings (
+                        name    char(50) primary key not null,
+                        value)''')
+    conn.commit()
+    conn.execute('''INSERT INTO settings VALUES ('zip', '78704')''')
     conn.commit()
     conn.close()
 

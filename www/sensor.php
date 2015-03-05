@@ -3,8 +3,8 @@
 // configure Dwoo template
 include 'lib/dwooAutoload.php';
 $dwoo = new Dwoo();
-$tepl = new Dwoo_Template_File('templates/sensor.tpl');
 $data = array();
+$template = 'templates/sensor.tpl';
 
 
 // open the db
@@ -40,48 +40,33 @@ if (isset($_POST["add"]))
 } // end sensor add if
 
 
-// view a sensor
-if (isset($_GET['mode']) && ($_GET["mode"] == "view"))
+// view/edit a sensor
+if (isset($_GET["sensor"]))
 {
-    $mode = "view";
-    if (isset($_GET['sensor']))
-    {
-        $res = $db->prepare("SELECT address, name FROM sensors WHERE address=?");
-        $res->execute(array($_GET['sensor']));
-        $sensor = $res->fetch(PDO::FETCH_ASSOC);
-    }
-} // end sensor edit if
-
-
-// edit a sensor
-if (isset($_GET['mode']) && ($_GET["mode"] == "edit"))
-{
-    $mode = "edit";
-    if (isset($_GET['sensor']))
-    {
-        $res = $db->prepare("SELECT address, name FROM sensors WHERE address=?");
-        $res->execute(array($_GET['sensor']));
-        $sensor = $res->fetch(PDO::FETCH_ASSOC);
-    }
+    $template = "templates/sensoredit.tpl";
+    $res = $db->prepare("SELECT address, name FROM sensors WHERE address=?");
+    $res->execute(array($_GET['sensor']));
+    $sensor = $res->fetch(PDO::FETCH_ASSOC);
+    $files = glob("/opt/ghpi/www/graphs/*-" . $_GET['sensor'] . ".rrd.png");
 } // end sensor edit if
 
 
 // save sensor edit
 if (isset($_POST["edit"]))
 {
-    if (isset($_POST["sensor"]) && isset($_POST["desc"]))
+    if (isset($_POST["address"]) && isset($_POST["name"]))
     {
         $res = $db->prepare("UPDATE sensors SET name=? WHERE address=?;");
-        $res->execute(array($_POST["desc"], $_POST['sensor']));
+        $res->execute(array($_POST["name"], $_POST["address"]));
         $err = $db->errorInfo();
         if ($err[0] != '00000')
         {
-            $data['noticetext'] = '<b>Error!</b>  The db update failed for '. $_POST["sensor"] .'.';
+            $data['noticetext'] = '<b>Error!</b>  The db update failed for '. $_POST["address"] .'.';
             $data['noticelevel']= 'danger';
             $dwoo->output($tepl, $data);
             die('Error writing sensor to db.');
         } else {
-            $notice_text = '<b>Success!</b>  Sensor '. $_POST["sensor"] .' was saved.';
+            $notice_text = '<b>Success!</b>  Sensor '. $_POST["address"] .' was saved.';
             $notice_level = 'success';
         }
     }
@@ -136,8 +121,10 @@ $sensors = $res->fetchAll(PDO::FETCH_ASSOC);
 
 
 // output the template
-$data['mode']       = $_GET['mode'];
+$tepl = new Dwoo_Template_File($template);
+#$data['mode']       = $_GET['mode'];
 $data['zip']        = $zip;
+$data['files']      = $files;
 $data['noticetext'] = $notice_text;
 $data['noticelevel']= $notice_level;
 $data['sensor']    = $sensor;

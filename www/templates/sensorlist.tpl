@@ -11,8 +11,7 @@
 {foreach $sensors sensor}
                             <tr>
                                 <td>{$sensor.address}</td>
-                                <td><a href='sensor.php?mode=view&sensor={$sensor.address}'>view</a> | 
-                                <a href='sensor.php?mode=edit&sensor={$sensor.address}'>edit</a></td>
+                                <td><a href='sensor.php?sensor={$sensor.address}'>view</a></td>
                                 <td>{$sensor.name}</td>
                             </tr>
 {/foreach}
