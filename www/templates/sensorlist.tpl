@@ -10,10 +10,10 @@
                         <tbody>
 {foreach $sensors sensor}
                             <tr>
+                                <td>{$sensor.address}</td>
+                                <td><a href='sensor.php?mode=view&sensor={$sensor.address}'>view</a> | 
+                                <a href='sensor.php?mode=edit&sensor={$sensor.address}'>edit</a></td>
                                 <td>{$sensor.name}</td>
-                                <td><a href='sensor.php?mode=view&sensor={$sensor.name}'>view</a> | 
-                                <a href='sensor.php?mode=edit&sensor={$sensor.name}'>edit</a></td>
-                                <td>{$sensor.value}</td>
                             </tr>
 {/foreach}
                         </tbody>

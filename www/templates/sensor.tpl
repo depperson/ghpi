@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="col-sm-9 col-md-10 main">
             {if $mode=="view"}
-            <h1 class="page-header">Sensor {$sensor.name}</h1>
+            <h1 class="page-header">Sensor {$sensor.address}</h1>
             {else}
             <h1 class="page-header">Sensors</h1>
             {/if}
@@ -17,15 +17,15 @@
                 <div class="col-sm-9">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
+                            <label class="col-sm-2 control-label">Address</label>
                             <div class="col-sm-5">
-                                <p class="form-control-static">{$sensor.name}</p>
+                                <p class="form-control-static">{$sensor.address}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Description</label>
                             <div class="col-sm-5">
-                                <input class="form-control" name="newdesc" value="{$sensor.value}">
+                                <input class="form-control" name="newdesc" value="{$sensor.name}">
                             </div>
                         </div>
                     </form>

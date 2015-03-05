@@ -8,7 +8,7 @@
 #
 
 
-import os, glob, time, sys
+import os, glob, time, sys, sqlite3
 from rrdtool import update as rrd_update
 from rrdtool import error as rrderror
 
@@ -59,6 +59,11 @@ def read_temp(rsensor):
 			return temp_f, tries
 	return (0.1234, tries)
 
+conn = sqlite3.connect('/opt/ghpi/www/ghpi.db')
+if conn is None:
+    print "failed to open db /opt/ghpi/www/ghpi.db."
+    sys.exit(1)
+
 
 while True:
 	sensors = find_sensors()
@@ -75,6 +80,11 @@ while True:
 			#s.open()
 			#s.write(dict(x=time.strftime('%c'),y=temp))
 			#s.close()
+
+                        # update db
+                        conn.execute('INSERT OR IGNORE INTO sensors (address, last) VALUES(?,?)', (sensor, temp))
+                        conn.execute('UPDATE sensors SET last=? WHERE address=?', (temp, sensor))
+                        conn.commit()
 			
 			# update the rrd
 			rrdfile = "/opt/ghpi/rrd/temps-%s.rrd" % sensor 

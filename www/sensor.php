@@ -23,9 +23,8 @@ if (isset($_POST["add"]))
     if (isset($_POST["sensor"]) && isset($_POST["desc"]))
     {
 
-        $res = $db->prepare("INSERT INTO settings (name, value)
-                VALUES ('". $_POST["sensor"] ."', '". $_POST["desc"] ."');");
-        $res->execute();
+        $res = $db->prepare("INSERT INTO sensors (address, name) VALUES (?,?)");
+        $res->execute(array($_POST["sensor"], $_POST["desc"]));
         $err = $db->errorInfo();
         if ($err[0] != '00000')
         {
@@ -47,8 +46,8 @@ if (isset($_GET['mode']) && ($_GET["mode"] == "view"))
     $mode = "view";
     if (isset($_GET['sensor']))
     {
-        $res = $db->prepare("SELECT name,value FROM settings WHERE name='". $_GET['sensor'] ."';");
-        $res->execute();
+        $res = $db->prepare("SELECT address, name FROM sensors WHERE address=?");
+        $res->execute(array($_GET['sensor']));
         $sensor = $res->fetch(PDO::FETCH_ASSOC);
     }
 } // end sensor edit if
@@ -60,8 +59,8 @@ if (isset($_GET['mode']) && ($_GET["mode"] == "edit"))
     $mode = "edit";
     if (isset($_GET['sensor']))
     {
-        $res = $db->prepare("SELECT name,value FROM settings WHERE name='". $_GET['sensor'] ."';");
-        $res->execute();
+        $res = $db->prepare("SELECT address, name FROM sensors WHERE address=?");
+        $res->execute(array($_GET['sensor']));
         $sensor = $res->fetch(PDO::FETCH_ASSOC);
     }
 } // end sensor edit if
@@ -72,10 +71,8 @@ if (isset($_POST["edit"]))
 {
     if (isset($_POST["sensor"]) && isset($_POST["desc"]))
     {
-        $res = $db->prepare("   UPDATE settings
-                                SET value='". $_POST['desc'] ."'
-                                WHERE name='".$_POST['sensor'] ."';");
-        $res->execute();
+        $res = $db->prepare("UPDATE sensors SET name=? WHERE address=?;");
+        $res->execute(array($_POST["desc"], $_POST['sensor']));
         $err = $db->errorInfo();
         if ($err[0] != '00000')
         {
@@ -101,16 +98,15 @@ if ($_GET['mode'] == "scan")
     {
         // 28-00043ebcf0ff is a sensor name
         $sensorname = basename($file);
-        $res = $db->prepare("SELECT value FROM settings WHERE name='$sensorname' LIMIT 1;");
-        $res->execute();
+        $res = $db->prepare("SELECT address FROM sensors WHERE address=? LIMIT 1;");
+        $res->execute(array($sensorname));
         $row = $res->fetch();
         if (!$row)
         {
             // this sensor is not in the db, add it
             $added += 1;
-            $res = $db->prepare("INSERT INTO settings (name, value) 
-                    VALUES ('$sensorname', 'sensor $sensorname');");
-            $res->execute();
+            $res = $db->prepare("INSERT INTO sensors (address) VALUES (?);");
+            $res->execute(array($sensorname));
             $err = $db->errorInfo();
             if ($err[0] != '00000')
             {
@@ -133,7 +129,7 @@ if ($_GET['mode'] == "scan")
 
 
 // list the sensors from db
-$res = $db->prepare("SELECT name,value FROM settings WHERE name LIKE '28%';");
+$res = $db->prepare("SELECT address, name FROM sensors;");
 $res->execute();
 $sensors = $res->fetchAll(PDO::FETCH_ASSOC);
 //print_r($rows);

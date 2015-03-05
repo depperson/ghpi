@@ -80,12 +80,26 @@ then
 fi
 echo "done."
 
+echo -n "Checking database /opt/ghpi/www/ghpi.db..."
+if [ "$(ls -la /opt/ghpi/www | grep -c ghpi.db)" -ne 1 ];
+then
+        echo -n "missing. Creating empty db."
+	/opt/ghpi/scripts/database.py init
+fi
+echo "done."
 
+echo -n "Setting permissions on /opt/ghpi/www..."
 chown www-data:www-data /opt/ghpi/www
+echo "done."
 
+echo -n "Creating temporary file /opt/ghpi/www/graphs/custom.png..."
 touch /opt/ghpi/www/graphs/custom.png
 chown www-data:www-data /opt/ghpi/www/graphs/custom.png
+echo "done."
 
+echo "Installing required software..."
 apt-get install php5-sqlite i2c-tools python-smbus python-pip python-dev
 pip install pillow
+echo "done."
+
 

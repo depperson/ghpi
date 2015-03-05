@@ -15,7 +15,7 @@ if (!($db = new PDO('sqlite:ghpi.db')))
     $data['noticetext'] = $notice_text;
     $data['noticelevel'] = $notice_level;
     $dwoo->output($tepl, $data);
-    die('Failed to open the database ghpi.db.');
+    die('Failed to open the database /opt/ghpi/www/ghpi.db.');
 }
 
 
@@ -47,7 +47,7 @@ if (isset($_POST["zip"]))
 
 
 // list the sensors from db
-$res = $db->prepare("SELECT name,value FROM settings WHERE name LIKE '28%';");
+$res = $db->prepare("SELECT name,address FROM sensors;");
 $res->execute();
 $sensors = $res->fetchAll(PDO::FETCH_ASSOC);
 //print_r($sensors);
