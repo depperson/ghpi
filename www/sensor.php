@@ -48,6 +48,10 @@ if (isset($_GET["sensor"]))
     $res->execute(array($_GET['sensor']));
     $sensor = $res->fetch(PDO::FETCH_ASSOC);
     $files = glob("/opt/ghpi/www/graphs/*-" . $_GET['sensor'] . ".rrd.png");
+    foreach($files as $filename)
+    {
+        $imagelist[] = basename($filename);
+    }
 } // end sensor edit if
 
 
@@ -124,7 +128,7 @@ $sensors = $res->fetchAll(PDO::FETCH_ASSOC);
 $tepl = new Dwoo_Template_File($template);
 #$data['mode']       = $_GET['mode'];
 $data['zip']        = $zip;
-$data['files']      = $files;
+$data['files']      = $imagelist;
 $data['noticetext'] = $notice_text;
 $data['noticelevel']= $notice_level;
 $data['sensor']    = $sensor;
