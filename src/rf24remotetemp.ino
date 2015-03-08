@@ -52,12 +52,7 @@ String getAddr(DeviceAddress deviceAddress)
   return out;
 }
 
-// function to print the temperature for a device
-float getTempF(DeviceAddress deviceAddress)
-{
-  float tempC = sensors.getTempC(deviceAddress);
-  return DallasTemperature::toFahrenheit(tempC);
-}
+
 
 // run once at startup
 void setup() {
