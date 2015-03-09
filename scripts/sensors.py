@@ -9,8 +9,7 @@
 
 
 import os, glob, time, sys, sqlite3
-from rrdtool import update as rrd_update
-from rrdtool import error as rrderror
+import database, rrd
 
 
 delay = 2
@@ -75,24 +74,11 @@ while True:
 				continue
 			print "sensor %s temp %.1f tries %s" % (sensor, temp, tries)
 
-			# update plotly with
-			#s = py.Stream(plotly_ids[sensor])
-			#s.open()
-			#s.write(dict(x=time.strftime('%c'),y=temp))
-			#s.close()
-
                         # update db
-                        conn.execute('INSERT OR IGNORE INTO sensors (address, last) VALUES(?,?)', (sensor, temp))
-                        conn.execute('UPDATE sensors SET last=? WHERE address=?', (temp, sensor))
-                        conn.commit()
-			
+		        database.update_sensor(sensor, temp)
+	
 			# update the rrd
-			rrdfile = "/opt/ghpi/rrd/temps-%s.rrd" % sensor 
-			#print "rrdfile is %s" % rrdfile
-			try:
-				rrd_update(rrdfile, "N:%.1f" % temp)
-			except rrderror, e:
-				print "rrd error %s" % e
+                        rrd.update_sensor(sensor, temp)
 
 			time.sleep(delay)
 	else:
