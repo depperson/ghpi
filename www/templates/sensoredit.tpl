@@ -32,7 +32,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <img src="graphs/6h-temps-{$sensor.address}.rrd.png">
                 </div>
                 <p> &nbsp; </p>
