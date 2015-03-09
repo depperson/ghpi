@@ -18,7 +18,11 @@ def get_sensor_name(inaddr):
     outname = conn.fetchone()
     print outname
     return outname
- 
+
+def get_sensor_list():
+    cur = conn.cursor()
+    cur.execute('''SELECT address FROM sensors''')
+    return cur.fetchall()
    
 def update_sensor(insensor, intemp):
     conn.execute('INSERT OR IGNORE INTO sensors (address, last) VALUES(?,?)', (insensor, intemp))

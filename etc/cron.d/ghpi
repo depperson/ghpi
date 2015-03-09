@@ -15,6 +15,7 @@
 
 # daily
 21 1 * * *	root	/opt/ghpi/scripts/graph.py 14d >/dev/null 2>&1
+25 1 * * *	root	/opt/ghpi/scripts/rrd.py scan >/dev/null 2>&1
 
 # weekly
 24 1 * * 0	root	/opt/ghpi/scripts/graph.py 1m >/dev/null 2>&1
