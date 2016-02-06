@@ -16,8 +16,12 @@ http://www.raspberrypi.org/forums/viewtopic.php?f=71&t=18852&p=188106&hilit=i2c+
 
 
 # installation
-run ./install.sh
-
+````
+cd /opt
+sudo git clone https://github.com/depperson/ghpi.git
+cd ghpi
+sudo ./install.sh
+````
 
 # install custom kernel or patch for 1-wire busses
 
