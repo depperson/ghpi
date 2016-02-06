@@ -98,6 +98,7 @@ chown www-data:www-data /opt/ghpi/www/graphs/custom.png
 echo "done."
 
 echo "Installing required software..."
+apt-get update
 apt-get install php5-sqlite i2c-tools python-smbus python-pip python-dev
 pip install pillow
 echo "done."
