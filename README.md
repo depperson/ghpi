@@ -3,7 +3,7 @@ GreenhousePi or GHPi connects temperature sensors to a Raspberry Pi for monitori
 
 
 # preparation
-Install Raspbian
+Install Raspbian Wheezy or earlier (Jessie expected to break due to new kernel)
 
 https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
 
@@ -18,17 +18,16 @@ sudo pip install pillow
 run ./install.sh
 
 
-# enable i2c for oled
-
-
 # install custom kernel or patch for 1-wire busses
 
 
 # TODO:
-- cronjobs
+- update the patched kernel
+- cronjobs?
 - sensor db
 
 
 # Roadmap:
-- pretty graphs
+- pretty graphs / cloud hosted
 - better mobile css
+- tinycore linux
