@@ -21,7 +21,7 @@ BOM:
 | 7       | 4    | 1-wire network D |
 | 5       | 3    | OLED SCL |
 | 3       | 2    | OLED SDA |
-| 33      | 25   | nRF24 CE |
+| 22      | 25   | nRF24 CE |
 | 24      | 8    | nRF24 CSN |
 | 23      | 11   | nRF24 SCK |
 | 19      | 10   | nRF24 MOSI |
