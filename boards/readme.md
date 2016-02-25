@@ -12,8 +12,24 @@ BOM:
 - 3x 4p .100 female row header
 
 
+# GreenhousePi pinout
+| rpi pin | gpio | purpose |
+| ------- | ---- | ------- |
+| 16      | 23   | 1-wire network A |
+| 18      | 24   | 1-wire network B |
+| 15      | 22   | 1-wire network C |
+| 7       | 4    | 1-wire network D |
+| 5       | 3    | OLED SCL |
+| 3       | 2    | OLED SDA |
+| 33      | 25   | nRF24 CE |
+| 24      | 8    | nRF24 CSN |
+| 23      | 11   | nRF24 SCK |
+| 19      | 10   | nRF24 MOSI |
+| 21      | 9    | nRF24 MISO |
+
+
 # RF24Remote board (rf24remote-board-r3.zip)
-This attaches two 1-wire networks and a Nortic RF24 to an Arduino Pro Micro 3.3v microcontroller. This package transmits temperature readings to the GreenhousePi board. 
+This attaches two 1-wire networks and a Nordic RF24 to an Arduino Pro Micro 3.3v microcontroller. This package transmits temperature readings to the GreenhousePi board. 
 
 BOM:
 - 2x 4p .100 female row header
@@ -21,4 +37,11 @@ BOM:
 - 1x 2p 5mm screw terminals
 - 2x 4.7k 1/4w resistors
 - 1x Arduino Pro Micro 3.3v
+
+
+# RF24Remote pinout
+| arduino pin | purpose |
+| ----------- | ------- |
+
+
 
