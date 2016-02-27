@@ -9,8 +9,12 @@
 
 
 import os, glob, time, sys, sqlite3
-import database, rrd
+import database
 
+# thingspeak settings
+import thingspeak
+channel_id = 91574
+write_key  = "JEMMA1CQ109N8FI3"
 
 delay = 2
 maxtries = 20
@@ -78,7 +82,12 @@ while True:
 		        database.update_sensor(sensor, temp)
 	
 			# update the rrd
-                        rrd.update_sensor(sensor, temp)
+                        #rrd.update_sensor(sensor, temp)
+
+			# update thingspeak
+			channel = thingspeak.Channel(id=channel_id,write_key=write_key)
+			response = channel.update({1:temp})
+			print response
 
 			time.sleep(delay)
 	else:
